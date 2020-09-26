@@ -1,4 +1,5 @@
 const $btn = document.getElementById("btn-kick");
+const $btn_fatality = document.getElementById("btn-fatality");
 
 const character = {
   name: "Pikachu",
@@ -26,6 +27,14 @@ $btn.addEventListener("click", function () {
   changeHP(enemy, enemyKick);
 });
 
+$btn_fatality.addEventListener("click", function () {
+  console.log("!!! FATALITY !!!");
+  let pokArray = [character, enemy];
+  let pok = pokArray[randomRound()];
+  console.log(pok.name + " получает удар FATALITY = " + pok.damageHP + " !!!");
+  changeHP(pok, pok.damageHP);
+});
+
 function init() {
   console.log("! START GAME !");
   renderHP(character);
@@ -48,11 +57,13 @@ function renderProgressBarHP(person) {
 }
 
 function changeHP(person, count) {
-  if (person.damageHP < count) {
+  if (person.damageHP <= count) {
     person.damageHP = 0;
     console.log("Бедный " + person.name + " проиграл бой !");
-    alert("Бедный " + person.name + " проиграл бой !");
     $btn.disabled = true;
+    $btn_fatality.disabled = true;
+    renderHP(person);
+    alert("Бедный " + person.name + " проиграл бой !");
   } else {
     person.damageHP -= count;
   }
@@ -62,4 +73,8 @@ function changeHP(person, count) {
 
 function random(num) {
   return Math.ceil(Math.random() * num);
+}
+
+function randomRound() {
+  return Math.round(Math.random());
 }
