@@ -7,6 +7,10 @@ const character = {
   damageHP: 100,
   elHP: document.getElementById("health-character"),
   elProgressBar: document.getElementById("progressbar-character"),
+  renderHP: renderHP,
+  changeHP: changeHP,
+  renderHPLife: renderHPLife,
+  renderProgressBarHP: renderProgressBarHP,
 };
 
 const enemy = {
@@ -15,16 +19,22 @@ const enemy = {
   damageHP: 100,
   elHP: document.getElementById("health-enemy"),
   elProgressBar: document.getElementById("progressbar-enemy"),
+  renderHP: renderHP,
+  changeHP: changeHP,
+  renderHPLife: renderHPLife,
+  renderProgressBarHP: renderProgressBarHP,
 };
 
 $btn.addEventListener("click", function () {
   console.log("!!! KICK !!!");
   let characterKick = random(20);
-  console.log("character kick = " + characterKick);
-  changeHP(character, characterKick);
   let enemyKick = random(20);
+
+  console.log("character kick = " + characterKick);
+  character.changeHP(characterKick);
+
   console.log("enemy kick = " + enemyKick);
-  changeHP(enemy, enemyKick);
+  enemy.changeHP(enemyKick);
 });
 
 $btn_fatality.addEventListener("click", function () {
@@ -32,43 +42,43 @@ $btn_fatality.addEventListener("click", function () {
   let pokArray = [character, enemy];
   let pok = pokArray[randomRound()];
   console.log(pok.name + " получает удар FATALITY = " + pok.damageHP + " !!!");
-  changeHP(pok, pok.damageHP);
+  pok.changeHP(pok.damageHP);
 });
 
 function init() {
   console.log("! START GAME !");
-  renderHP(character);
-  renderHP(enemy);
+  character.renderHP;
+  enemy.renderHP;
 }
 
 init();
 
-function renderHP(person) {
-  renderHPLife(person);
-  renderProgressBarHP(person);
+function renderHP() {
+  this.renderHPLife();
+  this.renderProgressBarHP();
 }
 
-function renderHPLife(person) {
-  person.elHP.innerText = person.damageHP + " / " + person.defaultHP;
+function renderHPLife() {
+  this.elHP.innerText = this.damageHP + " / " + this.defaultHP;
 }
 
-function renderProgressBarHP(person) {
-  person.elProgressBar.style.width = person.damageHP + "%";
+function renderProgressBarHP() {
+  this.elProgressBar.style.width = this.damageHP + "%";
 }
 
-function changeHP(person, count) {
-  if (person.damageHP <= count) {
-    person.damageHP = 0;
-    console.log("Бедный " + person.name + " проиграл бой !");
+function changeHP(count) {
+  if (this.damageHP <= count) {
+    this.damageHP = 0;
+    console.log("Бедный " + this.name + " проиграл бой !");
     $btn.disabled = true;
     $btn_fatality.disabled = true;
-    renderHP(person);
-    alert("Бедный " + person.name + " проиграл бой !");
+    this.renderHP;
+    alert("Бедный " + this.name + " проиграл бой !");
   } else {
-    person.damageHP -= count;
+    this.damageHP -= count;
   }
 
-  renderHP(person);
+  this.renderHP();
 }
 
 function random(num) {
