@@ -3,8 +3,8 @@ const $btn_fatality = document.getElementById("btn-fatality");
 
 const character = {
   name: "Pikachu",
-  defaultHP: 100,
-  damageHP: 100,
+  defaultHP: 500,
+  damageHP: 500,
   elHP: document.getElementById("health-character"),
   elProgressBar: document.getElementById("progressbar-character"),
   renderHP: renderHP,
@@ -15,8 +15,8 @@ const character = {
 
 const enemy = {
   name: "Charmander",
-  defaultHP: 100,
-  damageHP: 100,
+  defaultHP: 500,
+  damageHP: 500,
   elHP: document.getElementById("health-enemy"),
   elProgressBar: document.getElementById("progressbar-enemy"),
   renderHP: renderHP,
@@ -63,7 +63,7 @@ function renderHPLife() {
 }
 
 function renderProgressBarHP() {
-  this.elProgressBar.style.width = this.damageHP + "%";
+  this.elProgressBar.style.width = this.damageHP / (this.defaultHP / 100) + "%";
 }
 
 function changeHP(count) {
