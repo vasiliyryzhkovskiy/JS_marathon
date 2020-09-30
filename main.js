@@ -4,6 +4,7 @@ function $getElById(id) {
 
 const $btn = $getElById("btn-kick");
 const $btn_fatality = $getElById("btn-fatality");
+const $logs = document.querySelector("#logs");
 
 const character = {
   name: "Pikachu",
@@ -79,7 +80,7 @@ function changeHP(count) {
   console.log(log);
 
   if (this.damageHP <= count) {
-    this.damageHP = 0;  
+    this.damageHP = 0;
     console.log("Бедный " + this.name + " проиграл бой !");
 
     $btn.disabled = true;
@@ -113,8 +114,12 @@ function generateLog(firstPerson, secondPerson, count) {
     `${name} [${damageHP}/${defaultHP}] расстроился, как вдруг, неожиданно ${secondName} [${secondDamageHP}/${secondDefaultHP}] случайно влепил стопой в живот соперника силой ${count}.`,
     `${name} [${damageHP}/${defaultHP}] пытался что-то сказать, но вдруг, неожиданно ${secondName} [${secondDamageHP}/${secondDefaultHP}] со скуки, разбил бровь сопернику силой ${count}.`,
   ];
+  const stringLog = logs[random(logs.length) - 1];
+  const $paragraph = document.createElement("p");
+  $paragraph.innerText = stringLog;
+  $logs.insertBefore($paragraph, $logs.children[0]);
 
-  return logs[random(logs.length) - 1];
+  return stringLog;
 }
 
 function random(num) {
