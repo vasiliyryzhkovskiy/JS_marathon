@@ -1,3 +1,6 @@
+import random from "./utils.js";
+import { character, enemy } from "./pokemon.js";
+
 const $btn = $getElById("btn-kick");
 const $btn_mega_kick = $getElById("btn-mega-kick");
 const $btn_fatality = $getElById("btn-fatality");
@@ -15,29 +18,29 @@ let $isGameGoing = true;
 const simpleKikc = countButtonAkaZarEdition(6, $btn);
 const megaKikc = countButtonAkaZarEdition(10, $btn_mega_kick);
 
-const character = {
-  name: "Pikachu",
-  defaultHP: 100,
-  damageHP: 100,
-  elHP: $getElById("health-character"),
-  elProgressBar: $getElById("progressbar-character"),
-  renderHP: renderHP,
-  changeHP: changeHP,
-  renderHPLife: renderHPLife,
-  renderProgressBarHP: renderProgressBarHP,
-};
+// const character = {
+//   name: "Pikachu",
+//   defaultHP: 100,
+//   damageHP: 100,
+//   elHP: $getElById("health-character"),
+//   elProgressBar: $getElById("progressbar-character"),
+//   renderHP: renderHP,
+//   changeHP: changeHP,
+//   renderHPLife: renderHPLife,
+//   renderProgressBarHP: renderProgressBarHP,
+// };
 
-const enemy = {
-  name: "Charmander",
-  defaultHP: 100,
-  damageHP: 100,
-  elHP: $getElById("health-enemy"),
-  elProgressBar: $getElById("progressbar-enemy"),
-  renderHP: renderHP,
-  changeHP: changeHP,
-  renderHPLife: renderHPLife,
-  renderProgressBarHP: renderProgressBarHP,
-};
+// const enemy = {
+//   name: "Charmander",
+//   defaultHP: 100,
+//   damageHP: 100,
+//   elHP: $getElById("health-enemy"),
+//   elProgressBar: $getElById("progressbar-enemy"),
+//   renderHP: renderHP,
+//   changeHP: changeHP,
+//   renderHPLife: renderHPLife,
+//   renderProgressBarHP: renderProgressBarHP,
+// };
 
 $btn.addEventListener("click", function () {
   console.log("!!! KICK !!!");
@@ -160,10 +163,10 @@ function countButtonAkaZarEdition(count = 6, el) {
   };
 }
 
-function random(max, min = 0) {
-  const num = max - min;
-  return Math.ceil(Math.random() * num) + min;
-}
+// function random(max, min = 0) {
+//   const num = max - min;
+//   return Math.ceil(Math.random() * num) + min;
+// }
 
 function random(num) {
   return Math.ceil(Math.random() * num);
