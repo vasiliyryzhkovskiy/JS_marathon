@@ -1,15 +1,20 @@
-function $getElById(id) {
-  return document.getElementById(id);
-}
-
 const $btn = $getElById("btn-kick");
 const $btn_fatality = $getElById("btn-fatality");
 const $logs = document.querySelector("#logs");
 
+/** Доступное количество ударов */
+const $avaibleKiks = 12; //
+
+/** количество ударов */
+let $countKiks = 0;
+
+/** Продолжается игра ? */
+let $isGameGoing = true;
+
 const character = {
   name: "Pikachu",
-  defaultHP: 500,
-  damageHP: 500,
+  defaultHP: 100,
+  damageHP: 100,
   elHP: $getElById("health-character"),
   elProgressBar: $getElById("progressbar-character"),
   renderHP: renderHP,
@@ -20,8 +25,8 @@ const character = {
 
 const enemy = {
   name: "Charmander",
-  defaultHP: 500,
-  damageHP: 500,
+  defaultHP: 100,
+  damageHP: 100,
   elHP: $getElById("health-enemy"),
   elProgressBar: $getElById("progressbar-enemy"),
   renderHP: renderHP,
@@ -32,8 +37,8 @@ const enemy = {
 
 $btn.addEventListener("click", function () {
   console.log("!!! KICK !!!");
-  let characterKick = random(20);
-  let enemyKick = random(20);
+  let characterKick = random(25);
+  let enemyKick = random(25);
 
   console.log("character kick = " + characterKick);
   character.changeHP(characterKick);
@@ -71,6 +76,14 @@ function renderProgressBarHP() {
   this.elProgressBar.style.width = this.damageHP / (this.defaultHP / 100) + "%";
 }
 
+function kikcCount() {
+  return function () {
+    $countKiks = ++$countKiks;
+    console.log("Количество ударов всего = " + $countKiks);
+    return $countKiks;
+  };
+}
+
 function changeHP(count) {
   const log =
     this === enemy
@@ -79,7 +92,14 @@ function changeHP(count) {
   // console.log(this);
   console.log(log);
 
-  if (this.damageHP <= count) {
+  const kick = kikcCount();
+  if (kick() >= $avaibleKiks) {
+    $btn.disabled = true;
+    $btn_fatality.disabled = true;
+    alert("Закончилось количество ударов !!!");
+  }
+
+  if (this.damageHP <= count || !$isGameGoing) {
     this.damageHP = 0;
     console.log("Бедный " + this.name + " проиграл бой !");
 
@@ -87,6 +107,7 @@ function changeHP(count) {
     $btn_fatality.disabled = true;
     this.renderHP;
     alert("Бедный " + this.name + " проиграл бой !");
+    $isGameGoing = false;
   } else {
     this.damageHP -= count;
   }
@@ -128,4 +149,8 @@ function random(num) {
 
 function randomRound() {
   return Math.round(Math.random());
+}
+
+function $getElById(id) {
+  return document.getElementById(id);
 }
