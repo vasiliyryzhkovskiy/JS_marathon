@@ -1,5 +1,5 @@
 import random from "./utils.js";
-import { character, enemy } from "./pokemon.js";
+import Pokemon from "./pokemon.js";
 
 const $btn = $getElById("btn-kick");
 const $btn_mega_kick = $getElById("btn-mega-kick");
@@ -18,29 +18,29 @@ let $isGameGoing = true;
 const simpleKikc = countButtonAkaZarEdition(6, $btn);
 const megaKikc = countButtonAkaZarEdition(10, $btn_mega_kick);
 
-// const character = {
-//   name: "Pikachu",
-//   defaultHP: 100,
-//   damageHP: 100,
-//   elHP: $getElById("health-character"),
-//   elProgressBar: $getElById("progressbar-character"),
-//   renderHP: renderHP,
-//   changeHP: changeHP,
-//   renderHPLife: renderHPLife,
-//   renderProgressBarHP: renderProgressBarHP,
-// };
+const character = {
+  name: "Pikachu",
+  defaultHP: 100,
+  damageHP: 100,
+  elHP: $getElById("health-character"),
+  elProgressBar: $getElById("progressbar-character"),
+  renderHP: renderHP,
+  changeHP: changeHP,
+  renderHPLife: renderHPLife,
+  renderProgressBarHP: renderProgressBarHP,
+};
 
-// const enemy = {
-//   name: "Charmander",
-//   defaultHP: 100,
-//   damageHP: 100,
-//   elHP: $getElById("health-enemy"),
-//   elProgressBar: $getElById("progressbar-enemy"),
-//   renderHP: renderHP,
-//   changeHP: changeHP,
-//   renderHPLife: renderHPLife,
-//   renderProgressBarHP: renderProgressBarHP,
-// };
+const enemy = {
+  name: "Charmander",
+  defaultHP: 100,
+  damageHP: 100,
+  elHP: $getElById("health-enemy"),
+  elProgressBar: $getElById("progressbar-enemy"),
+  renderHP: renderHP,
+  changeHP: changeHP,
+  renderHPLife: renderHPLife,
+  renderProgressBarHP: renderProgressBarHP,
+};
 
 $btn.addEventListener("click", function () {
   console.log("!!! KICK !!!");
