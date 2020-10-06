@@ -111,6 +111,7 @@ function changeHP(count) {
     console.log("Бедный " + this.name + " проиграл бой !");
 
     $btn.disabled = true;
+    $btn_mega_kick.disabled = true;
     $btn_fatality.disabled = true;
     this.renderHP;
     alert("Бедный " + this.name + " проиграл бой !");
