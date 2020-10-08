@@ -1,127 +1,39 @@
 import random from "./utils.js";
-// import Pokemon from "./pokemon.js";
+import Pokemon from "./pokemon.js";
 
 const $btn = $getElById("btn-kick");
 const $btn_mega_kick = $getElById("btn-mega-kick");
-const $btn_fatality = $getElById("btn-fatality");
+
 const $logs = document.querySelector("#logs");
 
-/** Доступное количество ударов */
-const $avaibleKiks = 22; //
+const btnCountSimpleKick = countBut(6, $btn);
+const btnCountMegaKick = countBut(10, $btn_mega_kick);
 
-/** количество ударов */
-let $countKiks = 0;
-
-/** Продолжается игра ? */
-let $isGameGoing = true;
-
-const simpleKikc = countButtonAkaZarEdition(6, $btn);
-const megaKikc = countButtonAkaZarEdition(10, $btn_mega_kick);
-
-const character = {
+const player1 = new Pokemon({
   name: "Pikachu",
-  defaultHP: 100,
-  damageHP: 100,
-  elHP: $getElById("health-character"),
-  elProgressBar: $getElById("progressbar-character"),
-  renderHP: renderHP,
-  changeHP: changeHP,
-  renderHPLife: renderHPLife,
-  renderProgressBarHP: renderProgressBarHP,
-};
+  type: "electric",
+  hp: 500,
+  selectors: "character",
+});
 
-const enemy = {
+const player2 = new Pokemon({
   name: "Charmander",
-  defaultHP: 100,
-  damageHP: 100,
-  elHP: $getElById("health-enemy"),
-  elProgressBar: $getElById("progressbar-enemy"),
-  renderHP: renderHP,
-  changeHP: changeHP,
-  renderHPLife: renderHPLife,
-  renderProgressBarHP: renderProgressBarHP,
-};
+  type: "fire ",
+  hp: 450,
+  selectors: "enemy",
+});
 
 $btn.addEventListener("click", function () {
-  console.log("!!! KICK !!!");
-  console.log(simpleKikc());
-  let characterKick = random(25, 0);
-  let enemyKick = random(25, 0);
-
-  console.log("character kick = " + characterKick);
-  character.changeHP(characterKick);
-
-  console.log("enemy kick = " + enemyKick);
-  enemy.changeHP(enemyKick);
+  btnCountSimpleKick();
+  player1.changeHP(random(25, 0));
+  player2.changeHP(random(25, 0));
 });
 
 $btn_mega_kick.addEventListener("click", function () {
-  console.log("!!! MEGA KICK !!!");
-  console.log(megaKikc());
-  let characterKick = random(60, 20);
-  let enemyKick = random(60, 20);
-
-  console.log("character kick = " + characterKick);
-  character.changeHP(characterKick);
-
-  console.log("enemy kick = " + enemyKick);
-  enemy.changeHP(enemyKick);
+  btnCountMegaKick();
+  player1.changeHP(random(60, 20));
+  player2.changeHP(random(60, 20));
 });
-
-$btn_fatality.addEventListener("click", function () {
-  console.log("!!! FATALITY !!!");
-  let pokArray = [character, enemy];
-  let pok = pokArray[randomRound()];
-  console.log(pok.name + " получает удар FATALITY = " + pok.damageHP + " !!!");
-  pok.changeHP(pok.damageHP);
-});
-
-function init() {
-  console.log("! START GAME !");
-  character.renderHP;
-  enemy.renderHP;
-}
-
-init();
-
-function kikcCount() {
-  return function () {
-    $countKiks = ++$countKiks;
-    console.log("Количество ударов всего = " + $countKiks);
-    return $countKiks;
-  };
-}
-
-function changeHP(count) {
-  const log =
-    this === enemy
-      ? generateLog(this, character, count)
-      : generateLog(this, enemy, count);
-  console.log(log);
-
-  // const kick = kikcCount();
-  // if (kick() >= $avaibleKiks) {
-  //   $btn.disabled = true;
-  //   $btn_fatality.disabled = true;
-  //   alert("Закончилось количество ударов !!!");
-  // }
-
-  if (this.damageHP <= count || !$isGameGoing) {
-    this.damageHP = 0;
-    console.log("Бедный " + this.name + " проиграл бой !");
-
-    $btn.disabled = true;
-    $btn_mega_kick.disabled = true;
-    $btn_fatality.disabled = true;
-    this.renderHP;
-    alert("Бедный " + this.name + " проиграл бой !");
-    $isGameGoing = false;
-  } else {
-    this.damageHP -= count;
-  }
-
-  this.renderHP();
-}
 
 function generateLog(firstPerson, secondPerson, count) {
   const { name, damageHP, defaultHP } = firstPerson;
@@ -151,7 +63,7 @@ function generateLog(firstPerson, secondPerson, count) {
   return stringLog;
 }
 
-function countButtonAkaZarEdition(count = 6, el) {
+function countBut(count = 6, el) {
   const innerText = el.innerText;
   el.innerText = `${innerText} (${count})`;
   return function () {
@@ -164,11 +76,6 @@ function countButtonAkaZarEdition(count = 6, el) {
   };
 }
 
-// function random(max, min = 0) {
-//   const num = max - min;
-//   return Math.ceil(Math.random() * num) + min;
-// }
-
 function randomOne(num) {
   return Math.ceil(Math.random() * num);
 }
@@ -179,17 +86,4 @@ function randomRound() {
 
 function $getElById(id) {
   return document.getElementById(id);
-}
-
-function renderHP() {
-  this.renderHPLife();
-  this.renderProgressBarHP();
-}
-
-function renderHPLife() {
-  this.elHP.innerText = this.damageHP + " / " + this.defaultHP;
-}
-
-function renderProgressBarHP() {
-  this.elProgressBar.style.width = this.damageHP / (this.defaultHP / 100) + "%";
 }
